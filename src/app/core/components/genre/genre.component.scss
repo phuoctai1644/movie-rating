@@ -1,0 +1,9 @@
+.genre-wrapper {
+  padding: 5px 15px;
+  background-color: var(--x-light);
+
+  &.active {
+    color: white;
+    background-color: var(--x-primary);
+  }
+}

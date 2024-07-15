@@ -1,0 +1,11 @@
+html {
+  --x-light: #E9E9ED;
+  --x-primary: #E6A728;
+  --x-text: #333333;
+}
+
+div, span, p {
+  color: var(--x-text);
+  margin: 0;
+  padding: 0;
+}
