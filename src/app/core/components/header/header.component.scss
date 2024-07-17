@@ -1,0 +1,40 @@
+@import '../../../../styles/mixin.scss';
+
+.header-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .logo {
+    display: flex;
+    align-items: center;
+    img {
+      @include element-size(100px)
+    }
+    &-name {
+      font-size: 20px;
+      font-weight: 600;
+      max-width: 100px;
+      display: inline-block;
+    }
+  }
+  .genre-filter {
+    display: flex;
+    align-items: center;
+    app-genre {
+      margin-right: 10px; 
+    }
+  }
+  .search-bar {
+    border: 1px solid var(--x-light);
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    border-radius: 20px;
+    input {
+      flex: 1;
+      border: none;
+      outline: none;
+      height: 100%;
+    }
+  }
+}

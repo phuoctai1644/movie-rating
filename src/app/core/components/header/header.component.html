@@ -1,0 +1,17 @@
+<div class="container header-wrapper">
+  <div class="logo">
+    <img src="/assets/icons/movie-rating.svg" alt="Movie Review">
+    <span class="logo-name mt-1">Movie Review</span>
+  </div>
+
+  <div class="genre-filter">
+    <ng-container *ngFor="let genre of genres">
+      <app-genre [genre]="genre"></app-genre>
+    </ng-container>
+  </div>
+
+  <div class="search-bar">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <input type="text" placeholder="Search" class="ml-1">
+  </div>
+</div>

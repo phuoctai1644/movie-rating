@@ -1,9 +1,11 @@
 .genre-wrapper {
   padding: 5px 15px;
   background-color: var(--x-light);
+  border-radius: 15px;
+  cursor: pointer;
 
-  &.active {
-    color: white;
+  &.active, &:hover {
+    color: white!important;
     background-color: var(--x-primary);
   }
 }

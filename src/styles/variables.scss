@@ -1,0 +1,13 @@
+@import '../styles/mixin.scss';
+
+.icon-sm {
+  @include element-size(14px);
+}
+
+.icon-md {
+  @include element-size(18px);
+}
+
+.icon-lg {
+  @include element-size(22px);
+}
