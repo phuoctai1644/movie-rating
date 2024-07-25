@@ -1,4 +1,4 @@
 export const environment = {
-  apiUrl: 'https://api.themoviedb.org/3/',
+  apiUrl: 'https://api.themoviedb.org/3',
   accessToken: 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiYWJmYjc4YzZmZThhZWVkYmM2MDUzZDhjMjNkYjhjNyIsIm5iZiI6MTcyMTIzNjEyMy4yNzUyMjcsInN1YiI6IjY2OTE3MmJhNzg0YjJjOWQ0NTYzNzBiMiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.xcd2TfizaybDBKOyXIkxhnztXA7yBOLBBl9N8gsELLs'
 }
