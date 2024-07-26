@@ -5,8 +5,10 @@
   </div>
 
   <div class="genre-filter">
-    <ng-container *ngFor="let genre of genres">
-      <app-genre [genre]="genre"></app-genre>
+    <app-genre [genre]="allGenre" [active]="!selectedGenres.length" (select)="onSelectGenre()"></app-genre>
+    
+    <ng-container *ngFor="let genre of (genres$ | async) | slice : 0 : 4">
+      <app-genre [genre]="genre" [active]="isActiveGenre(genre)" (select)="onSelectGenre($event)"></app-genre>
     </ng-container>
   </div>
 

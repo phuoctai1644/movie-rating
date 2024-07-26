@@ -6,6 +6,7 @@ export const GenreActions = createActionGroup({
   events: {
     'get': emptyProps(),
     'getSuccess': props<{ genres: Genre[] }>(),
-    'getError': props<{ error: string }>()
+    'getError': props<{ error: string }>(),
+    'select': props<{ genre?: Genre }>(),
   }
 });

@@ -12,9 +12,9 @@ import { NgClass } from '@angular/common';
 export class GenreComponent {
   @Input() genre!: Genre;
   @Input() active = false;
-  @Output() click = new EventEmitter<Genre>();
+  @Output() select = new EventEmitter<Genre>();
 
-  onClickGenre() {
-    this.click.emit(this.genre);
+  onSelectGenre() {
+    this.select.emit(this.genre);
   }
 }

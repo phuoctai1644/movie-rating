@@ -14,7 +14,7 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideClientHydration(),
-    provideStore(movieReducers),
+    provideStore({movie: movieReducers}),
     provideEffects(MovieEffects),
     provideHttpClient(
       withFetch(),

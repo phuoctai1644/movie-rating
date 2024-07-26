@@ -8,5 +8,11 @@ export interface GenreResponse {
 }
 
 export interface MovieState {
-  genres?: Genre[]
+  genres: Genre[];
+  selectedGenres?: Genre[];
+}
+
+export const allGenre: Genre = {
+  id: 0,
+  name: 'All'
 }
