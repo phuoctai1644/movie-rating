@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MovieCardComponent } from '../../../../core/components/movie-card/movie-card.component';
+import { MovieCardComponent } from '../../../../shared/components/movie-card/movie-card.component';
 
 @Component({
   selector: 'app-popular-movie',

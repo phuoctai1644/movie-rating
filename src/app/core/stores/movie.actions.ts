@@ -1,5 +1,5 @@
 import { createActionGroup, emptyProps, props } from "@ngrx/store";
-import { Genre, Movie } from "./movie.models";
+import { Genre, MovieSort } from "./movie.models";
 
 export const GenreActions = createActionGroup({
   source: 'Movie Genre',
@@ -15,7 +15,7 @@ export const TopRatedActions = createActionGroup({
   source: 'Top Rated Movie',
   events: {
     'get': props<{ page: number }>(),
-    'getSuccess': props<{ movies: Movie[] }>(),
+    'getSuccess': props<{ movies: MovieSort[] }>(),
     'getFailed': props<{ error: string }>()
   }
 });

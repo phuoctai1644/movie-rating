@@ -4,7 +4,7 @@ import Glide from '@glidejs/glide';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { MovieImagePipe } from '../../../../shared/pipes/movie-image.pipe';
-import { Movie, MovieState, selectTopRatedMovies } from '../../../../core/stores';
+import { MovieSort, MovieState, selectTopRatedMovies } from '../../../../core/stores';
 
 const COMMONS = [NgFor, NgStyle];
 const PIPES = [AsyncPipe, SlicePipe, MovieImagePipe];
@@ -17,7 +17,7 @@ const PIPES = [AsyncPipe, SlicePipe, MovieImagePipe];
   styleUrls: ['./top-rated-movie.component.scss', '../../home.component.scss']
 })
 export class TopRatedMovieComponent implements OnInit, AfterViewInit {
-  movies$!: Observable<Movie[]>;
+  movies$!: Observable<MovieSort[]>;
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
     private store: Store<MovieState>

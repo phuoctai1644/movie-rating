@@ -4,7 +4,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { debounceTime, distinctUntilChanged, Observable } from 'rxjs';
 import { Genre } from '../../models';
-import { GenreComponent } from '../genre/genre.component';
+import { GenreComponent } from '../../../shared/components/genre/genre.component';
 import { allGenre, GenreActions, MovieState, selectGenres, selectSelectedGenres } from '../../stores';
 
 @Component({

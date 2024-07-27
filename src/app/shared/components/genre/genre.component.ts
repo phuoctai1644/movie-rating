@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Genre } from '../../models';
+import { Genre } from '../../../core/models';
 import { NgClass } from '@angular/common';
 
 @Component({
