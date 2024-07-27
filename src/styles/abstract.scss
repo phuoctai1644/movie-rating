@@ -57,3 +57,15 @@
   text-overflow: ellipsis;
   overflow: hidden;
 }
+
+// Glidejs
+.glide__bullets {
+  bottom: -2rem!important;
+  .glide__bullet {
+    background-color: white;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    &--active {
+      background-color: var(--x-text);
+    }
+  }
+}
