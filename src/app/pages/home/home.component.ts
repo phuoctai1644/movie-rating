@@ -2,11 +2,19 @@ import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { GenreActions, MovieState } from '../../core/stores';
 import { HeaderComponent } from '../../core/components/header/header.component';
+import { TopRatedMovieComponent } from './components/top-rated-movie/top-rated-movie.component';
+import { PopularMovieComponent } from './components/popular-movie/popular-movie.component';
+
+const COMPONENTS = [
+  HeaderComponent,
+  TopRatedMovieComponent,
+  PopularMovieComponent
+];
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [HeaderComponent],
+  imports: [...COMPONENTS],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
