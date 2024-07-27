@@ -7,21 +7,25 @@
   <div class="glide cards-slide mt-4">
     <div class="glide__track" data-glide-el="track">
       <ul class="glide__slides">
-        <li class="glide__slide card-wrapper">
-          <div class="card-desc">
-            <div class="name">The Godfather</div>
-            <div class="rating-info">
-              <img src="assets/icons/star.svg" alt="star">
-              <div>
-                <p>
-                  <span class="fs-18 fw-6">8.2/</span>
-                  <span>10</span>
-                </p>
-                <p>399k</p>
+        <ng-container *ngFor="let movie of movies$ | async | slice : 0 : 5">
+          <li class="glide__slide">
+            <div class="card-wrapper" [ngStyle]="{'background-image': movie.poster_path | movieImage}">
+              <div class="card-desc">
+                <div class="name">{{movie.title}}</div>
+                <div class="rating-info">
+                  <img src="assets/icons/star.svg" alt="star">
+                  <div>
+                    <p>
+                      <span class="fs-18 fw-6">{{movie.vote_average}}/</span>
+                      <span>10</span>
+                    </p>
+                    <p>{{movie.popularity}}k</p>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        </li>
+          </li>
+        </ng-container>
       </ul>
     </div>
 
@@ -29,6 +33,8 @@
       <button class="glide__bullet" data-glide-dir="=0"></button>
       <button class="glide__bullet" data-glide-dir="=1"></button>
       <button class="glide__bullet" data-glide-dir="=2"></button>
+      <button class="glide__bullet" data-glide-dir="=3"></button>
+      <button class="glide__bullet" data-glide-dir="=4"></button>
     </div>
   </div>
 </div>

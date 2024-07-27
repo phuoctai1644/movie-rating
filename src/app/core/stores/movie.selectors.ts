@@ -14,3 +14,8 @@ export const selectSelectedGenres = createSelector(
   selectFeature,
   (state: MovieState) => state?.selectedGenres
 );
+
+export const selectTopRatedMovies = createSelector(
+  selectFeature,
+  (state: MovieState) => state?.topRatedMovies
+);
