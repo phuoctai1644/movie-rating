@@ -2,7 +2,8 @@
 export interface MovieState {
   genres: Genre[];
   selectedGenres?: Genre[];
-  topRatedMovies: MovieSort[];
+  topRatedMovies: MovieShort[];
+  popularMovies: MovieShort[];
 }
 
 /** Genre model */
@@ -16,7 +17,7 @@ export interface GenreResponse {
 }
 
 /** Movie model */
-export interface MovieSort {
+export interface MovieShort {
   id: number;
   adult: boolean;
   backdrop_path: string;

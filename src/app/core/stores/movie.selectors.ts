@@ -19,3 +19,8 @@ export const selectTopRatedMovies = createSelector(
   selectFeature,
   (state: MovieState) => state?.topRatedMovies
 );
+
+export const selectPopularMovies = createSelector(
+  selectFeature,
+  (state: MovieState) => state?.popularMovies
+);

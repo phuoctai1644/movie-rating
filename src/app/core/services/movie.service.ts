@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { GenreResponse, List2Res, MovieSort } from '../stores/movie.models';
+import { GenreResponse, List2Res, MovieShort } from '../stores/movie.models';
 import { environment } from '../../../environments/environment';
 
 @Injectable({
@@ -14,6 +14,10 @@ export class MovieService {
   }
 
   getTopRatedMovies(page: number) {
-    return this.http.get<List2Res<MovieSort>>(`${environment.apiUrl}/movie/top_rated?page=${page}`);
+    return this.http.get<List2Res<MovieShort>>(`${environment.apiUrl}/movie/top_rated?page=${page}`);
+  }
+
+  getPopularMovies(page: number) {
+    return this.http.get<List2Res<MovieShort>>(`${environment.apiUrl}/movie/popular?page=${page}`);
   }
 }

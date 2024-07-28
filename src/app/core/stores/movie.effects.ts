@@ -3,7 +3,7 @@ import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { catchError, exhaustMap, map } from "rxjs/operators";
 import { of } from "rxjs";
 import { MovieService } from "../services/movie.service";
-import { GenreActions, TopRatedActions } from "./movie.actions";
+import { GenreActions, PopularActions, TopRatedActions } from "./movie.actions";
 
 export const getGenres$ = createEffect(
   (actions$ = inject(Actions), movieService = inject(MovieService)) => {
@@ -31,6 +31,23 @@ export const getTopRatedMovies$ = createEffect(
           map(res => TopRatedActions.getSuccess({ movies: res.results })),
           catchError((error: { message: string }) => 
             of(TopRatedActions.getFailed({ error: error?.message }))
+          )
+        )
+      )
+    )
+  },
+  { functional: true }
+);
+
+export const getPopularMovies$ = createEffect(
+  (actions$ = inject(Actions), movieService = inject(MovieService)) => {
+    return actions$.pipe(
+      ofType(PopularActions.get),
+      exhaustMap(props => 
+        movieService.getPopularMovies(props.page).pipe(
+          map(res => PopularActions.getSuccess({ movies: res.results })),
+          catchError((error: { message: string }) => 
+            of(PopularActions.getFailed({ error: error?.message }))
           )
         )
       )

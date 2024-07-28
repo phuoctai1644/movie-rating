@@ -5,11 +5,8 @@
   </div>
 
   <div class="cards mt-4">
-    <app-movie-card></app-movie-card>
-    <app-movie-card></app-movie-card>
-    <app-movie-card></app-movie-card>
-    <app-movie-card></app-movie-card>
-    <app-movie-card></app-movie-card>
-    <app-movie-card></app-movie-card>
+    <ng-container *ngFor="let movie of movies$ | async">
+      <app-movie-card [movie]="movie"></app-movie-card>
+    </ng-container>
   </div>
 </div>

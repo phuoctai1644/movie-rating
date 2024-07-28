@@ -9,7 +9,7 @@
       <ul class="glide__slides">
         <ng-container *ngFor="let movie of movies$ | async | slice : 0 : 5">
           <li class="glide__slide">
-            <div class="card-wrapper" [ngStyle]="{'background-image': movie.poster_path | movieImage}">
+            <div class="card-wrapper" [ngStyle]="{'background-image': 'url(' + (movie.poster_path | movieImage) + ')'}">
               <div class="card-desc">
                 <div class="name">{{movie.title}}</div>
                 <div class="rating-info">

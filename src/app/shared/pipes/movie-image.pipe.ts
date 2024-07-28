@@ -8,6 +8,6 @@ import { environment } from '../../../environments/environment';
 export class MovieImagePipe implements PipeTransform {
 
   transform(path: string): string {
-    return `url('${environment.imageUrl}${path}')`;
+    return `${environment.imageUrl}${path}`;
   }
 }
