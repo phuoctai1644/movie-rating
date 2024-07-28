@@ -1,0 +1,19 @@
+<div class="container header-wrapper">
+  <div class="logo">
+    <img src="/assets/icons/movie-rating.svg" alt="Movie Review">
+    <span class="logo-name mt-1">Movie Review</span>
+  </div>
+
+  <div class="genre-filter">
+    <app-genre [genre]="allGenre" [active]="!selectedGenres.length" (select)="onSelectGenre()"></app-genre>
+    
+    <ng-container *ngFor="let genre of (genres$ | async) | slice : 0 : 4">
+      <app-genre [genre]="genre" [active]="isActiveGenre(genre)" (select)="onSelectGenre($event)"></app-genre>
+    </ng-container>
+  </div>
+
+  <div class="search-bar">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <input type="text" placeholder="Search" class="ml-1" [formControl]="keywordCtrl">
+  </div>
+</div>
