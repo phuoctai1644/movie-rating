@@ -24,3 +24,8 @@ export const selectPopularMovies = createSelector(
   selectFeature,
   (state: MovieState) => state?.popularMovies
 );
+
+export const selectUpComingMovies = createSelector(
+  selectFeature,
+  (state: MovieState) => state?.upComingMovies
+);

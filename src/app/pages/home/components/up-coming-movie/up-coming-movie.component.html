@@ -1,0 +1,12 @@
+<div class="coming-soon-movie-wrapper">
+  <div class="section-title">
+    <span>Up coming</span>
+    <div class="bottom-line"></div>
+  </div>
+
+  <div class="cards mt-4 pb-1">
+    <ng-container *ngFor="let movie of movies$ | async">
+      <app-movie-card [movie]="movie"></app-movie-card>
+    </ng-container>
+  </div>
+</div>

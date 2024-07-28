@@ -20,4 +20,8 @@ export class MovieService {
   getPopularMovies(page: number) {
     return this.http.get<List2Res<MovieShort>>(`${environment.apiUrl}/movie/popular?page=${page}`);
   }
+
+  getUpComingMovies(page: number) {
+    return this.http.get<List2Res<MovieShort>>(`${environment.apiUrl}/movie/upcoming?page=${page}`);
+  }
 }

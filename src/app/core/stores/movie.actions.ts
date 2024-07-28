@@ -28,3 +28,12 @@ export const PopularActions = createActionGroup({
     'getFailed': props<{ error: string }>()
   }
 });
+
+export const UpComingActions = createActionGroup({
+  source: 'Up Coming Movie',
+  events: {
+    'get': props<{ page: number }>(),
+    'getSuccess': props<{ movies: MovieShort[] }>(),
+    'getFailed': props<{ error: string }>()
+  }
+});

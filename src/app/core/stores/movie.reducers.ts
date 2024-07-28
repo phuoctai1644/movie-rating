@@ -1,12 +1,13 @@
 import { createReducer, on } from "@ngrx/store";
 import { MovieState } from "./movie.models";
-import { GenreActions, PopularActions, TopRatedActions } from "./movie.actions";
+import { UpComingActions, GenreActions, PopularActions, TopRatedActions } from "./movie.actions";
 
 export const movieState: MovieState = {
   genres: [],
   selectedGenres: [],
   topRatedMovies: [],
   popularMovies: [],
+  upComingMovies: []
 }
 
 export const movieReducers = createReducer(
@@ -32,5 +33,7 @@ export const movieReducers = createReducer(
   on(TopRatedActions.getSuccess, (state, { movies }) => ({ ...state, topRatedMovies: movies })),
   on(TopRatedActions.getFailed, (state, { error }) => ({ ...state, topRatedMovies: [] })),
   on(PopularActions.getSuccess, (state, { movies }) => ({ ...state, popularMovies: movies })),
-  on(PopularActions.getFailed, (state, { error }) => ({ ...state, popularMovies: [] }))
+  on(PopularActions.getFailed, (state, { error }) => ({ ...state, popularMovies: [] })),
+  on(UpComingActions.getSuccess, (state, { movies }) => ({ ...state, upComingMovies: movies })),
+  on(UpComingActions.getFailed, (state, { error }) => ({ ...state, upComingMovies: [] })),
 );
