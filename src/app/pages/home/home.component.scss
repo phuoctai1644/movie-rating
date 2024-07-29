@@ -1,9 +1,15 @@
 .home-wrapper {
+  display: flex;
+  flex-direction: column;
+  max-height: 100vh;
   .body-content {
     background-color: var(--x-light);
     margin-right: unset;
     border-top-left-radius: 30px;
     padding: 40px;
+    flex: 1;
+    overflow: auto;
+    align-items: flex-start;
   }
 }
 

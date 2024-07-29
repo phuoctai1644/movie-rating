@@ -3,6 +3,7 @@
 html {
   --x-light: #E9E9ED;
   --x-primary: #E6A728;
+  --x-primary-hover: #d39823;
   --x-text: #333333;
 }
 
@@ -11,7 +12,10 @@ body {
 }
 
 div, span, p {
-  color: var(--x-text);
   margin: 0;
   padding: 0;
+}
+
+div, span, p, button {
+  color: var(--x-text);
 }

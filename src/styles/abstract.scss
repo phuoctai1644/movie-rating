@@ -58,6 +58,17 @@
   overflow: hidden;
 }
 
+button {
+  border: 1px solid var(--x-text);
+  border-radius: 5px;
+  padding: 10px 15px;
+  background-color: var(--x-primary);
+  cursor: pointer;
+  &:hover {
+    background-color: var(--x-primary-hover);
+  }
+}
+
 // Glidejs
 .glide__bullets {
   bottom: -2rem!important;
