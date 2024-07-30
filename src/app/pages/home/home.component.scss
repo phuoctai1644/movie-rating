@@ -32,3 +32,11 @@
   column-gap: 15px;
   row-gap: 15px;
 }
+
+.empty-list {
+  text-align: center;
+  .empty-icon {
+    width: 50%;
+    max-width: 400px;
+  }
+}

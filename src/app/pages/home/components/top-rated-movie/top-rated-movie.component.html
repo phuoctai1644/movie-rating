@@ -4,37 +4,52 @@
     <div class="bottom-line"></div>
   </div>
 
-  <div class="glide cards-slide mt-4">
-    <div class="glide__track" data-glide-el="track">
-      <ul class="glide__slides">
-        <ng-container *ngFor="let movie of movies$ | async | slice : 0 : 5">
-          <li class="glide__slide">
-            <div class="card-wrapper" [ngStyle]="{'background-image': 'url(' + (movie.poster_path | movieImage) + ')'}">
-              <div class="card-desc">
-                <div class="name">{{movie.title}}</div>
-                <div class="rating-info">
-                  <img src="assets/icons/star.svg" alt="star">
-                  <div>
-                    <p>
-                      <span class="fs-18 fw-6">{{movie.vote_average}}/</span>
-                      <span>10</span>
-                    </p>
-                    <p>{{movie.popularity}}k</p>
+  <ng-container *ngIf="(movies$ | async)?.length; else emptyList">
+    <div class="glide cards-slide mt-4">
+      <div class="glide__track" data-glide-el="track">
+        <ul class="glide__slides">
+          <ng-container *ngFor="let movie of movies$ | async | slice : 0 : 5">
+            <li class="glide__slide">
+              <div class="card-wrapper" [ngStyle]="{'background-image': 'url(' + (movie.poster_path | movieImage) + ')'}">
+                <div class="card-desc">
+                  <div class="name">{{movie.title}}</div>
+                  <div class="rating-info">
+                    <img src="assets/icons/star.svg" alt="star">
+                    <div>
+                      <p>
+                        <span class="fs-18 fw-6">{{movie.vote_average}}/</span>
+                        <span>10</span>
+                      </p>
+                      <p>{{movie.popularity}}k</p>
+                    </div>
                   </div>
                 </div>
               </div>
+            </li>
+          </ng-container>
+  
+          <div class="glide__slide">
+            <div class="card-wrapper empty">
+              <button (click)="onViewMore()">View More</button>
             </div>
-          </li>
-        </ng-container>
-      </ul>
+          </div>
+        </ul>
+      </div>
+  
+      <div class="glide__bullets" data-glide-el="controls[nav]">
+        <button class="glide__bullet" data-glide-dir="=0"></button>
+        <button class="glide__bullet" data-glide-dir="=1"></button>
+        <button class="glide__bullet" data-glide-dir="=2"></button>
+        <button class="glide__bullet" data-glide-dir="=3"></button>
+        <button class="glide__bullet" data-glide-dir="=4"></button>
+        <button class="glide__bullet" data-glide-dir="=5"></button>
+      </div>
     </div>
+  </ng-container>
 
-    <div class="glide__bullets" data-glide-el="controls[nav]">
-      <button class="glide__bullet" data-glide-dir="=0"></button>
-      <button class="glide__bullet" data-glide-dir="=1"></button>
-      <button class="glide__bullet" data-glide-dir="=2"></button>
-      <button class="glide__bullet" data-glide-dir="=3"></button>
-      <button class="glide__bullet" data-glide-dir="=4"></button>
+  <ng-template #emptyList>
+    <div class="empty-list mt-4">
+      <img class="empty-icon" src="assets/icons/empty-list.svg" alt="Empty">
     </div>
-  </div>
+  </ng-template>
 </div>

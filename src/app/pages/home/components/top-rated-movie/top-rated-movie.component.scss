@@ -6,7 +6,7 @@
     aspect-ratio: 1 / 1.5;
     @include box-shadow();
     max-width: 100%;
-    margin: auto;
+    margin: 10px auto;
     display: flex;
     align-items: flex-end;
     background-position: center;
@@ -35,6 +35,11 @@
     }
     &:hover {
       filter: brightness(80%);
+    }
+    &.empty {
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
   }
 }

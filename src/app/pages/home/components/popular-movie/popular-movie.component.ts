@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { AsyncPipe, NgFor } from '@angular/common';
+import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import { MovieShort, MovieState, selectPopularMovies } from '../../../../core/stores';
 import { MovieCardComponent } from '../../../../shared/components/movie-card/movie-card.component';
 
 @Component({
   selector: 'app-popular-movie',
   standalone: true,
-  imports: [MovieCardComponent, NgFor, AsyncPipe],
+  imports: [MovieCardComponent, NgFor, AsyncPipe, NgIf],
   templateUrl: './popular-movie.component.html',
   styleUrls: ['./popular-movie.component.scss', '../../home.component.scss']
 })

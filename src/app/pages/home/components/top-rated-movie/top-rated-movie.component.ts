@@ -1,4 +1,4 @@
-import { AsyncPipe, isPlatformBrowser, NgFor, NgStyle, SlicePipe } from '@angular/common';
+import { AsyncPipe, isPlatformBrowser, NgFor, NgIf, NgStyle, SlicePipe } from '@angular/common';
 import { AfterViewInit, Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import Glide from '@glidejs/glide';
 import { Observable } from 'rxjs';
@@ -6,7 +6,7 @@ import { Store } from '@ngrx/store';
 import { MovieImagePipe } from '../../../../shared/pipes/movie-image.pipe';
 import { MovieShort, MovieState, selectTopRatedMovies } from '../../../../core/stores';
 
-const COMMONS = [NgFor, NgStyle];
+const COMMONS = [NgFor, NgStyle, NgIf];
 const PIPES = [AsyncPipe, SlicePipe, MovieImagePipe];
 
 @Component({
@@ -35,4 +35,6 @@ export class TopRatedMovieComponent implements OnInit, AfterViewInit {
       }).mount();
     }
   }
+
+  onViewMore() { }
 }
