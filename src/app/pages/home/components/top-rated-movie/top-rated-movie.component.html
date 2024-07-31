@@ -4,7 +4,7 @@
     <div class="bottom-line"></div>
   </div>
 
-  <ng-container *ngIf="(movies$ | async)?.length; else emptyList">
+  <!-- <ng-container *ngIf="(movies$ | async)?.length; else emptyList"> -->
     <div class="glide cards-slide mt-4">
       <div class="glide__track" data-glide-el="track">
         <ul class="glide__slides">
@@ -45,7 +45,7 @@
         <button class="glide__bullet" data-glide-dir="=5"></button>
       </div>
     </div>
-  </ng-container>
+  <!-- </ng-container> -->
 
   <ng-template #emptyList>
     <div class="empty-list mt-4">

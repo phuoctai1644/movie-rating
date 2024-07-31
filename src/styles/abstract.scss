@@ -59,11 +59,12 @@
 }
 
 button {
-  border: 1px solid var(--x-text);
+  border: none;
   border-radius: 5px;
   padding: 10px 15px;
   background-color: var(--x-primary);
   cursor: pointer;
+  color: white!important;
   &:hover {
     background-color: var(--x-primary-hover);
   }
