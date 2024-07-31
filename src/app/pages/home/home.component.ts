@@ -5,6 +5,7 @@ import { HeaderComponent } from '../../core/components/header/header.component';
 import { TopRatedMovieComponent } from './components/top-rated-movie/top-rated-movie.component';
 import { PopularMovieComponent } from './components/popular-movie/popular-movie.component';
 import { UpComingMovieComponent } from './components/up-coming-movie/up-coming-movie.component';
+import { RouterOutlet } from '@angular/router';
 
 const COMPONENTS = [
   HeaderComponent,
@@ -16,7 +17,7 @@ const COMPONENTS = [
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [...COMPONENTS],
+  imports: [...COMPONENTS, RouterOutlet],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })

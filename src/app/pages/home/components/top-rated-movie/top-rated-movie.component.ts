@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { MovieImagePipe } from '../../../../shared/pipes/movie-image.pipe';
 import { MovieShort, MovieState, selectTopRatedMovies } from '../../../../core/stores';
+import { Router } from '@angular/router';
 
 const COMMONS = [NgFor, NgStyle, NgIf];
 const PIPES = [AsyncPipe, SlicePipe, MovieImagePipe];
@@ -14,13 +15,14 @@ const PIPES = [AsyncPipe, SlicePipe, MovieImagePipe];
   standalone: true,
   imports: [...COMMONS, ...PIPES],
   templateUrl: './top-rated-movie.component.html',
-  styleUrls: ['./top-rated-movie.component.scss', '../../home.component.scss']
+  styleUrls: ['./top-rated-movie.component.scss', '../movie-overall/movie-overall.component.scss'],
 })
 export class TopRatedMovieComponent implements OnInit, AfterViewInit {
   movies$!: Observable<MovieShort[]>;
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
-    private store: Store<MovieState>
+    private store: Store<MovieState>,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -36,5 +38,7 @@ export class TopRatedMovieComponent implements OnInit, AfterViewInit {
     }
   }
 
-  onViewMore() { }
+  onViewMore() {
+    this.router.navigateByUrl('/top-rated');
+  }
 }

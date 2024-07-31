@@ -6,6 +6,7 @@ import { debounceTime, distinctUntilChanged, Observable } from 'rxjs';
 import { Genre } from '../../models';
 import { GenreComponent } from '../../../shared/components/genre/genre.component';
 import { allGenre, GenreActions, MovieState, selectGenres, selectSelectedGenres } from '../../stores';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -20,7 +21,10 @@ export class HeaderComponent implements OnInit {
   genres$!: Observable<Genre[]>;
   keywordCtrl = new FormControl;
   
-  constructor(private store: Store<MovieState>) { }
+  constructor(
+    private store: Store<MovieState>,
+    private router: Router,
+  ) { }
 
   ngOnInit(): void {
     this.genres$ = this.store.select(selectGenres);
@@ -46,5 +50,9 @@ export class HeaderComponent implements OnInit {
       .subscribe(value => {
         // Dispatch action for searching movie...
       })
+  }
+
+  goToHome() {
+    this.router.navigateByUrl('/');
   }
 }

@@ -1,6 +1,14 @@
+@import '../../../../../styles/mixin.scss';
+
 .coming-soon-movie-wrapper {
   margin-top: 2rem;
   .cards {
     overflow-x: auto;
+  }
+  .view-more {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    @include element-size(210px, calc(210px * 1.6));
   }
 }

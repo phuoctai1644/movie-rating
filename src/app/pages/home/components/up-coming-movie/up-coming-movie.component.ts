@@ -10,7 +10,7 @@ import { MovieCardComponent } from '../../../../shared/components/movie-card/mov
   standalone: true,
   imports: [NgFor, NgIf, AsyncPipe, MovieCardComponent],
   templateUrl: './up-coming-movie.component.html',
-  styleUrls: ['./up-coming-movie.component.scss', '../../home.component.scss'] 
+  styleUrls: ['./up-coming-movie.component.scss', '../movie-overall/movie-overall.component.scss'] 
 })
 export class UpComingMovieComponent {
   movies$!: Observable<MovieShort[]>;
@@ -20,4 +20,6 @@ export class UpComingMovieComponent {
   ngOnInit(): void {
     this.movies$ = this.store.select(selectUpComingMovies);  
   }
+
+  onViewMore() { }
 }
