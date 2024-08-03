@@ -1,6 +1,6 @@
 // Core, Common
 import { Component, Input } from '@angular/core';
-import { NgStyle } from '@angular/common';
+import { DecimalPipe, NgStyle } from '@angular/common';
 // Model
 import { MovieShort } from '../../../core/stores';
 // Pipe
@@ -10,7 +10,7 @@ import { GenreShortLabelPipe } from './movie-card.pipe';
 @Component({
   selector: 'app-movie-card',
   standalone: true,
-  imports: [MovieImagePipe, NgStyle, GenreShortLabelPipe],
+  imports: [MovieImagePipe, NgStyle, GenreShortLabelPipe, DecimalPipe],
   templateUrl: './movie-card.component.html',
   styleUrl: './movie-card.component.scss'
 })

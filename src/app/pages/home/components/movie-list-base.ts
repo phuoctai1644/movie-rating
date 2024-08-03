@@ -11,10 +11,11 @@ export enum MovieListType {
 
 @Directive()
 export class MovieListBase {
-  type!: MovieListType;
-  listType = MovieListType;
   router = inject(Router);
   store = inject(Store<MovieState>);
+  type!: MovieListType;
+  listType = MovieListType;
+  page: number = 1;
 
   constructor(type?: MovieListType) {
     if (type) {

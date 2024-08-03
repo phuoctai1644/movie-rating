@@ -28,7 +28,10 @@ export const getTopRatedMovies$ = createEffect(
       ofType(TopRatedActions.get),
       exhaustMap(props => 
         movieService.getTopRatedMovies(props.page).pipe(
-          map(res => TopRatedActions.getSuccess({ movies: res.results })),
+          map(res => {
+            const isLoadMore = props.page > 1;
+            return TopRatedActions.getSuccess({ movies: res.results, isLoadMore });
+          }),
           catchError((error: { message: string }) => 
             of(TopRatedActions.getFailed({ error: error?.message }))
           )
@@ -45,7 +48,10 @@ export const getPopularMovies$ = createEffect(
       ofType(PopularActions.get),
       exhaustMap(props => 
         movieService.getPopularMovies(props.page).pipe(
-          map(res => PopularActions.getSuccess({ movies: res.results })),
+          map(res => {
+            const isLoadMore = props.page > 1;
+            return PopularActions.getSuccess({ movies: res.results, isLoadMore });
+          }),
           catchError((error: { message: string }) => 
             of(PopularActions.getFailed({ error: error?.message }))
           )
@@ -62,7 +68,10 @@ export const getUpComingMovies$ = createEffect(
       ofType(UpComingActions.get),
       exhaustMap(props => 
         movieService.getUpComingMovies(props.page).pipe(
-          map(res => UpComingActions.getSuccess({ movies: res.results })),
+          map(res => {
+            const isLoadMore = props.page > 1;
+            return UpComingActions.getSuccess({ movies: res.results, isLoadMore });
+          }),
           catchError((error: { message: string }) => 
             of(UpComingActions.getFailed({ error: error?.message }))
           )

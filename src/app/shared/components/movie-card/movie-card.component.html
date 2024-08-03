@@ -10,7 +10,7 @@
     
     <div class="rating ml-1">
       <div style="display: flex;align-items: baseline;">
-        <span class="fs-18 fw-6">{{movie.vote_average}}/</span>
+        <span class="fs-18 fw-6">{{movie.vote_average | number : '1.2-2'}}/</span>
         <span>10</span>
       </div>
       <img src="assets/icons/star.svg" alt="star">

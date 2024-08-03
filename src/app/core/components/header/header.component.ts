@@ -3,9 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { debounceTime, distinctUntilChanged, Observable } from 'rxjs';
-import { Genre } from '../../models';
 import { GenreComponent } from '../../../shared/components/genre/genre.component';
-import { allGenre, GenreActions, MovieState, selectGenres, selectSelectedGenres } from '../../stores';
+import { allGenre, Genre, GenreActions, MovieState, selectGenres, selectSelectedGenres } from '../../stores';
 import { Router } from '@angular/router';
 
 @Component({

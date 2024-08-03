@@ -35,19 +35,6 @@ export interface MovieShort {
   vote_count: number
 }
 
-export interface List2Res<T> {
-  page: number;
-  results: T[];
-  total_pages?: number;
-  total_results?: number;
-  dates?: DateRange;
-}
-
-export interface DateRange {
-  maximum: string;
-  minimum: string;
-}
-
 export const allGenre: Genre = {
   id: 0,
   name: 'All'
