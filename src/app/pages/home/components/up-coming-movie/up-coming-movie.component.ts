@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { MovieShort, MovieState, selectUpComingMovies } from '../../../../core/stores';
+import { MovieShort, selectUpComingMovies } from '../../../../core/stores';
 import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import { MovieCardComponent } from '../../../../shared/components/movie-card/movie-card.component';
+import { MovieListBase, MovieListType } from '../movie-list-base';
 
 @Component({
   selector: 'app-up-coming-movie',
@@ -12,14 +12,14 @@ import { MovieCardComponent } from '../../../../shared/components/movie-card/mov
   templateUrl: './up-coming-movie.component.html',
   styleUrls: ['./up-coming-movie.component.scss', '../movie-overall/movie-overall.component.scss'] 
 })
-export class UpComingMovieComponent {
+export class UpComingMovieComponent extends MovieListBase {
   movies$!: Observable<MovieShort[]>;
 
-  constructor(private store: Store<MovieState>) { }
+  constructor() {
+    super(MovieListType.UP_COMING);
+  }
 
   ngOnInit(): void {
     this.movies$ = this.store.select(selectUpComingMovies);  
   }
-
-  onViewMore() { }
 }

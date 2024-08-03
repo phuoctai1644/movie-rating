@@ -10,15 +10,7 @@ export const routes: Routes = [
     component: HomeComponent,
     children: [
       {
-        path: 'top-rated',
-        component: MovieListComponent
-      },
-      { 
-        path: 'popular',
-        component: MovieListComponent
-      },
-      {
-        path: 'up-coming',
+        path: 'movie-list',
         component: MovieListComponent
       },
       {

@@ -1,1 +1,24 @@
-<p>movie-list works!</p>
+<div class="movie-list-wrapper">
+  <div class="section-title">
+    <span>{{type}}</span>
+    <div class="bottom-line"></div>
+  </div>
+
+  <ng-container *ngIf="(movies$ | async)?.length; else emptyList">
+    <div class="cards mt-4">
+      <ng-container *ngFor="let movie of movies$ | async">
+        <app-movie-card [movie]="movie"></app-movie-card>
+      </ng-container>
+    </div>
+  
+    <div class="view-more mt-3">
+      <button (click)="onViewMore()">View More</button>
+    </div>
+  </ng-container>
+
+  <ng-template #emptyList>
+    <div class="empty-list mt-4">
+      <img class="empty-icon" src="assets/icons/empty-list.svg" alt="Empty">
+    </div>
+  </ng-template>
+</div>
