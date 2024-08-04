@@ -2,10 +2,9 @@ import { Injectable } from '@angular/core';
 import { ComponentStore } from '@ngrx/component-store';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { tap, withLatestFrom } from 'rxjs/operators';
 import { 
-  Genre, MovieShort, MovieState, selectPopularMovies, selectSelectedGenres, selectTopRatedMovies,
-  selectUpComingMovies
+  Genre, MovieShort, MovieState, selectPopularMovies, selectSelectedGenres, selectTopRatedMovies, selectUpComingMovies
 } from '../../core/stores';
 
 interface State {
@@ -24,11 +23,17 @@ const initialState: State = {
 export class HomeStore extends ComponentStore<State> {
   constructor(private store: Store<MovieState>) {
     super(initialState);
-    this.effects.getTopRatedMovies(store.select(selectTopRatedMovies));
-    this.effects.getPopularMovies(store.select(selectPopularMovies));
-    this.effects.getUpComingMovies(store.select(selectUpComingMovies));
-    this.effects.changeSelectedGenres(store.select(selectSelectedGenres));
+    this.effects.getTopRatedMovies(this.selectTopRatedMovies$);
+    this.effects.getPopularMovies(this.selectPopularMovies$);
+    this.effects.getUpComingMovies(this.selectUpComingMovies$);
+    this.effects.changeSelectedGenres(this.selectSelectedGenres$);
   }
+
+  // Ngrx store > Movie selectors
+  readonly selectTopRatedMovies$ = this.store.select(selectTopRatedMovies);
+  readonly selectPopularMovies$ = this.store.select(selectPopularMovies);
+  readonly selectUpComingMovies$ = this.store.select(selectUpComingMovies);
+  readonly selectSelectedGenres$ = this.store.select(selectSelectedGenres);
 
   readonly getter = {
     topRatedMovies: () => this.get().topRatedMovies,
@@ -54,6 +59,14 @@ export class HomeStore extends ComponentStore<State> {
     }, 
   }
 
+  readonly loadPopularMovies = this.effect(() => 
+    this.store.select(selectPopularMovies).pipe(
+      tap((movies: MovieShort[]) => {
+        this.patchState({ popularMovies: movies });
+      })
+    )
+  );
+
   readonly effects = {
     getTopRatedMovies: this.effect((movies$: Observable<MovieShort[]>) => {
       return movies$.pipe(tap((movies: MovieShort[]) => {
@@ -70,16 +83,29 @@ export class HomeStore extends ComponentStore<State> {
         this.actions.setUpComingMovies(movies);
       }));
     }),
-    changeSelectedGenres: this.effect((genre$: Observable<Genre[]>) => {
-      return genre$.pipe(tap(genres => {
-        const genreIds = genres.map(genre => genre.id);
-        const updatedMovies = (movies: MovieShort[]) =>
-          movies.filter(movie => movie.genre_ids.some(id => genreIds.includes(id)));
+    changeSelectedGenres: this.effect((genres$: Observable<Genre[]>) => {
+      return genres$.pipe(
+        withLatestFrom(
+          this.selectTopRatedMovies$,
+          this.selectPopularMovies$,
+          this.selectUpComingMovies$
+        ),
+        tap(([genres, topRated, popular, upComing]) => {
+          const genreIds = genres.map(genre => genre.id);
+          const updatedMovies = (movies: MovieShort[]) =>
+            movies.filter(movie => movie.genre_ids.some(id => genreIds.includes(id)));
 
-        this.actions.setTopRatedMovies(updatedMovies(this.getter.topRatedMovies()));
-        this.actions.setPopularMovies(updatedMovies(this.getter.popularMovies()));
-        this.actions.setUpComingMovies(updatedMovies(this.getter.upComingMovies()));
-      }))
-    })
+          if (genreIds.length) {
+            topRated = updatedMovies(topRated);
+            popular = updatedMovies(popular);
+            upComing = updatedMovies(upComing);
+          }
+
+          this.actions.setTopRatedMovies(topRated);
+          this.actions.setPopularMovies(popular);
+          this.actions.setUpComingMovies(upComing);
+        })
+      )
+    }),
   }
 }
