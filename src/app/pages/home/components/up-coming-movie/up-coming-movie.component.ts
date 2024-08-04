@@ -1,23 +1,21 @@
 import { Component } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { MovieShort, MovieState, selectUpComingMovies } from '../../../../core/stores';
-import { AsyncPipe, NgFor } from '@angular/common';
+import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import { MovieCardComponent } from '../../../../shared/components/movie-card/movie-card.component';
+import { MovieListBase, MovieListType } from '../movie-list-base';
 
 @Component({
   selector: 'app-up-coming-movie',
   standalone: true,
-  imports: [NgFor, AsyncPipe, MovieCardComponent],
+  imports: [NgFor, NgIf, AsyncPipe, MovieCardComponent],
   templateUrl: './up-coming-movie.component.html',
-  styleUrls: ['./up-coming-movie.component.scss', '../../home.component.scss'] 
+  styleUrls: ['./up-coming-movie.component.scss', '../movie-overall/movie-overall.component.scss'] 
 })
-export class UpComingMovieComponent {
-  movies$!: Observable<MovieShort[]>;
+export class UpComingMovieComponent extends MovieListBase {
+  constructor() {
+    super(MovieListType.UP_COMING);
+  }
 
-  constructor(private store: Store<MovieState>) { }
-
-  ngOnInit(): void {
-    this.movies$ = this.store.select(selectUpComingMovies);  
+  override init(): void {
+    this.movies$ = this.homeStore.selectors.upComingMovies$;
   }
 }

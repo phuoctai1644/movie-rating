@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { GenreResponse, List2Res, MovieShort } from '../stores/movie.models';
+import { GenreResponse, MovieShort } from '../stores/movie.models';
 import { environment } from '../../../environments/environment';
+import { List2Res } from '../models';
 
 @Injectable({
   providedIn: 'root'

@@ -1,23 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Store } from '@ngrx/store';
-import { MovieShort, MovieState, selectPopularMovies } from '../../../../core/stores';
+import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import { MovieCardComponent } from '../../../../shared/components/movie-card/movie-card.component';
-import { AsyncPipe, NgFor } from '@angular/common';
+import { MovieListBase, MovieListType } from '../movie-list-base';
 
 @Component({
   selector: 'app-popular-movie',
   standalone: true,
-  imports: [MovieCardComponent, NgFor, AsyncPipe],
+  imports: [MovieCardComponent, NgFor, AsyncPipe, NgIf],
   templateUrl: './popular-movie.component.html',
-  styleUrls: ['./popular-movie.component.scss', '../../home.component.scss']
+  styleUrls: ['./popular-movie.component.scss', '../movie-overall/movie-overall.component.scss']
 })
-export class PopularMovieComponent implements OnInit {
-  movies$!: Observable<MovieShort[]>;
+export class PopularMovieComponent extends MovieListBase implements OnInit {
+  constructor() {
+    super(MovieListType.POPULAR);
+  }
 
-  constructor(private store: Store<MovieState>) { }
-
-  ngOnInit(): void {
-    this.movies$ = this.store.select(selectPopularMovies);  
+  override init(): void {
+    this.movies$ = this.homeStore.selectors.popularMovies$;
   }
 }

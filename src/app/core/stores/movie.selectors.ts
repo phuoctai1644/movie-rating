@@ -29,3 +29,8 @@ export const selectUpComingMovies = createSelector(
   selectFeature,
   (state: MovieState) => state?.upComingMovies
 );
+
+export const selectKeyword = createSelector(
+  selectFeature,
+  (state: MovieState) => state?.keyword
+);

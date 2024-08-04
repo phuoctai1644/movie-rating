@@ -2,10 +2,10 @@ import { AsyncPipe, NgFor, SlicePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Store } from '@ngrx/store';
+import { Router } from '@angular/router';
 import { debounceTime, distinctUntilChanged, Observable } from 'rxjs';
-import { Genre } from '../../models';
 import { GenreComponent } from '../../../shared/components/genre/genre.component';
-import { allGenre, GenreActions, MovieState, selectGenres, selectSelectedGenres } from '../../stores';
+import { allGenre, Genre, GenreActions, MovieState, SearchMovieAction, selectGenres, selectSelectedGenres } from '../../stores';
 
 @Component({
   selector: 'app-header',
@@ -20,7 +20,10 @@ export class HeaderComponent implements OnInit {
   genres$!: Observable<Genre[]>;
   keywordCtrl = new FormControl;
   
-  constructor(private store: Store<MovieState>) { }
+  constructor(
+    private store: Store<MovieState>,
+    private router: Router,
+  ) { }
 
   ngOnInit(): void {
     this.genres$ = this.store.select(selectGenres);
@@ -43,8 +46,13 @@ export class HeaderComponent implements OnInit {
     
     this.keywordCtrl.valueChanges
       .pipe(debounceTime(500), distinctUntilChanged())
-      .subscribe(value => {
+      .subscribe(keyword => {
         // Dispatch action for searching movie...
+        this.store.dispatch(SearchMovieAction({ keyword }));
       })
+  }
+
+  goToHome() {
+    this.router.navigateByUrl('/');
   }
 }

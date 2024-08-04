@@ -1,10 +1,11 @@
 /** Movie store */
 export interface MovieState {
   genres: Genre[];
-  selectedGenres?: Genre[];
+  selectedGenres: Genre[];
   topRatedMovies: MovieShort[];
   popularMovies: MovieShort[];
   upComingMovies: MovieShort[];
+  keyword: string;
 }
 
 /** Genre model */
@@ -33,19 +34,6 @@ export interface MovieShort {
   video: boolean;
   vote_average: number;
   vote_count: number
-}
-
-export interface List2Res<T> {
-  page: number;
-  results: T[];
-  total_pages?: number;
-  total_results?: number;
-  dates?: DateRange;
-}
-
-export interface DateRange {
-  maximum: string;
-  minimum: string;
 }
 
 export const allGenre: Genre = {

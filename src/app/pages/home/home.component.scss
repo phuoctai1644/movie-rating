@@ -1,28 +1,15 @@
 .home-wrapper {
+  display: flex;
+  flex-direction: column;
+  max-height: 100vh;
   .body-content {
     background-color: var(--x-light);
     margin-right: unset;
     border-top-left-radius: 30px;
     padding: 40px;
-  }
-}
-
-.section-title {
-  text-transform: uppercase;
-  font-weight: 800;
-  font-size: 40px;
-  letter-spacing: -2px;
-  display: flex;
-  align-items: baseline;
-  .bottom-line {
-    border-bottom: 5px solid var(--x-text);
     flex: 1;
-    margin-left: 5px;
+    overflow: auto;
+    align-items: flex-start;
+    margin-left: 2.5rem;
   }
-}
-
-.cards {
-  display: flex;
-  column-gap: 15px;
-  row-gap: 15px;
 }

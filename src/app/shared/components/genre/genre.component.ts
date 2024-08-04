@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Genre } from '../../../core/models';
 import { NgClass } from '@angular/common';
+import { Genre } from '../../../core/stores';
 
 @Component({
   selector: 'app-genre',

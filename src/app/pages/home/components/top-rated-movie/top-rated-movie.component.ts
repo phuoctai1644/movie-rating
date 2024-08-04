@@ -1,12 +1,10 @@
-import { AsyncPipe, isPlatformBrowser, NgFor, NgStyle, SlicePipe } from '@angular/common';
+import { AsyncPipe, isPlatformBrowser, NgFor, NgIf, NgStyle, SlicePipe } from '@angular/common';
 import { AfterViewInit, Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import Glide from '@glidejs/glide';
-import { Observable } from 'rxjs';
-import { Store } from '@ngrx/store';
 import { MovieImagePipe } from '../../../../shared/pipes/movie-image.pipe';
-import { MovieShort, MovieState, selectTopRatedMovies } from '../../../../core/stores';
+import { MovieListBase, MovieListType } from '../movie-list-base';
 
-const COMMONS = [NgFor, NgStyle];
+const COMMONS = [NgFor, NgStyle, NgIf];
 const PIPES = [AsyncPipe, SlicePipe, MovieImagePipe];
 
 @Component({
@@ -14,17 +12,17 @@ const PIPES = [AsyncPipe, SlicePipe, MovieImagePipe];
   standalone: true,
   imports: [...COMMONS, ...PIPES],
   templateUrl: './top-rated-movie.component.html',
-  styleUrls: ['./top-rated-movie.component.scss', '../../home.component.scss']
+  styleUrls: ['./top-rated-movie.component.scss', '../movie-overall/movie-overall.component.scss'],
 })
-export class TopRatedMovieComponent implements OnInit, AfterViewInit {
-  movies$!: Observable<MovieShort[]>;
+export class TopRatedMovieComponent extends MovieListBase implements OnInit, AfterViewInit {
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
-    private store: Store<MovieState>
-  ) { }
+  ) {
+    super(MovieListType.TOP_RATED);
+  }
 
-  ngOnInit(): void {
-    this.movies$ = this.store.select(selectTopRatedMovies);
+  override init(): void {
+    this.movies$ = this.homeStore.selectors.topRatedMovies$;
   }
 
   ngAfterViewInit(): void {

@@ -1,13 +1,14 @@
 import { createReducer, on } from "@ngrx/store";
 import { MovieState } from "./movie.models";
-import { UpComingActions, GenreActions, PopularActions, TopRatedActions } from "./movie.actions";
+import { UpComingActions, GenreActions, PopularActions, TopRatedActions, SearchMovieAction } from "./movie.actions";
 
 export const movieState: MovieState = {
   genres: [],
   selectedGenres: [],
   topRatedMovies: [],
   popularMovies: [],
-  upComingMovies: []
+  upComingMovies: [],
+  keyword: '',
 }
 
 export const movieReducers = createReducer(
@@ -30,10 +31,35 @@ export const movieReducers = createReducer(
 
     return { ...state, selectedGenres: _selectedGenres };
   }),
-  on(TopRatedActions.getSuccess, (state, { movies }) => ({ ...state, topRatedMovies: movies })),
+  on(TopRatedActions.getSuccess, (state, payload) => {
+    let _movies = state.topRatedMovies;
+    if (payload.isLoadMore) {
+      _movies = [..._movies, ...payload.movies];
+    } else {
+      _movies = [...payload.movies];
+    }
+    return { ...state, topRatedMovies: _movies };
+  }),
   on(TopRatedActions.getFailed, (state, { error }) => ({ ...state, topRatedMovies: [] })),
-  on(PopularActions.getSuccess, (state, { movies }) => ({ ...state, popularMovies: movies })),
+  on(PopularActions.getSuccess, (state, payload) => {
+    let _movies = state.popularMovies;
+    if (payload.isLoadMore) {
+      _movies = [..._movies, ...payload.movies];
+    } else {
+      _movies = [...payload.movies];
+    }
+    return { ...state, popularMovies: _movies };
+  }),
   on(PopularActions.getFailed, (state, { error }) => ({ ...state, popularMovies: [] })),
-  on(UpComingActions.getSuccess, (state, { movies }) => ({ ...state, upComingMovies: movies })),
+  on(UpComingActions.getSuccess, (state, payload) => {
+    let _movies = state.upComingMovies;
+    if (payload.isLoadMore) {
+      _movies = [..._movies, ...payload.movies];
+    } else {
+      _movies = [...payload.movies];
+    }
+    return { ...state, upComingMovies: _movies };
+  }),
   on(UpComingActions.getFailed, (state, { error }) => ({ ...state, upComingMovies: [] })),
+  on(SearchMovieAction, (state, { keyword }) => ({ ...state, keyword }))
 );

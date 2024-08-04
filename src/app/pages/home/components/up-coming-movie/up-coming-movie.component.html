@@ -4,9 +4,21 @@
     <div class="bottom-line"></div>
   </div>
 
-  <div class="cards mt-4 pb-1">
-    <ng-container *ngFor="let movie of movies$ | async">
-      <app-movie-card [movie]="movie"></app-movie-card>
-    </ng-container>
-  </div>
+  <ng-container *ngIf="(movies$ | async)?.length; else emptyList">
+    <div class="cards mt-4 pb-1">
+      <ng-container *ngFor="let movie of movies$ | async">
+        <app-movie-card [movie]="movie"></app-movie-card>
+      </ng-container>
+
+      <div class="view-more">
+        <button (click)="onViewMore()">View More</button>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-template #emptyList>
+    <div class="empty-list mt-4">
+      <img class="empty-icon" src="assets/icons/empty-list.svg" alt="Empty">
+    </div>
+  </ng-template>
 </div>

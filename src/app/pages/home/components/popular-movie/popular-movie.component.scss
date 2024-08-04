@@ -1,5 +1,11 @@
 .popular-movie-wrapper {
   .cards {
     flex-wrap: wrap;
+    max-height: calc(210px * 1.7 * 2 + 20px);
+    overflow: hidden;
+  }
+  .view-more {
+    display: flex;
+    justify-content: center;
   }
 }

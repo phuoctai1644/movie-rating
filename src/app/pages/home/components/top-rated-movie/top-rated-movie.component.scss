@@ -2,10 +2,11 @@
 
 .top-rated-movie-wrapper {
   .card-wrapper {
-    @include element-size(95%, 500px);
+    width: 95%;
+    aspect-ratio: 1 / 1.5;
     @include box-shadow();
     max-width: 100%;
-    margin: auto;
+    margin: 10px auto;
     display: flex;
     align-items: flex-end;
     background-position: center;
@@ -31,6 +32,14 @@
           color: white;
         }
       }
+    }
+    &:hover {
+      filter: brightness(80%);
+    }
+    &.empty {
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
   }
 }
