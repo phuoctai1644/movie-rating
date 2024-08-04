@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { RouterOutlet } from '@angular/router';
 import { GenreActions, MovieState, PopularActions, TopRatedActions, UpComingActions } from '../../core/stores';
 import { HeaderComponent } from '../../core/components/header/header.component';
 import { TopRatedMovieComponent } from './components/top-rated-movie/top-rated-movie.component';
 import { PopularMovieComponent } from './components/popular-movie/popular-movie.component';
 import { UpComingMovieComponent } from './components/up-coming-movie/up-coming-movie.component';
-import { RouterOutlet } from '@angular/router';
+import { HomeStore } from './home.store';
+import { provideComponentStore } from '@ngrx/component-store';
 
 const COMPONENTS = [
   HeaderComponent,
@@ -17,6 +19,7 @@ const COMPONENTS = [
 @Component({
   selector: 'app-home',
   standalone: true,
+  providers: [provideComponentStore(HomeStore)],
   imports: [...COMPONENTS, RouterOutlet],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'

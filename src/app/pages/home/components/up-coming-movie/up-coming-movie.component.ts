@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { Observable } from 'rxjs';
-import { MovieShort, selectUpComingMovies } from '../../../../core/stores';
 import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import { MovieCardComponent } from '../../../../shared/components/movie-card/movie-card.component';
 import { MovieListBase, MovieListType } from '../movie-list-base';
@@ -13,13 +11,11 @@ import { MovieListBase, MovieListType } from '../movie-list-base';
   styleUrls: ['./up-coming-movie.component.scss', '../movie-overall/movie-overall.component.scss'] 
 })
 export class UpComingMovieComponent extends MovieListBase {
-  movies$!: Observable<MovieShort[]>;
-
   constructor() {
     super(MovieListType.UP_COMING);
   }
 
-  ngOnInit(): void {
-    this.movies$ = this.store.select(selectUpComingMovies);  
+  override init(): void {
+    this.movies$ = this.homeStore.selectors.upComingMovies$;
   }
 }

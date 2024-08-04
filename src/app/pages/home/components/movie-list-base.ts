@@ -1,7 +1,9 @@
-import { Directive, inject } from "@angular/core";
+import { Directive, inject, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { Store } from "@ngrx/store";
-import { MovieState } from "../../../core/stores";
+import { Genre, MovieShort, MovieState, selectSelectedGenres } from "../../../core/stores";
+import { Observable } from "rxjs";
+import { HomeStore } from "../home.store";
 
 export enum MovieListType {
   POPULAR = 'popular',
@@ -10,18 +12,27 @@ export enum MovieListType {
 }
 
 @Directive()
-export class MovieListBase {
+export class MovieListBase implements OnInit {
   router = inject(Router);
   store = inject(Store<MovieState>);
+  homeStore = inject(HomeStore);
+
   type!: MovieListType;
   listType = MovieListType;
   page: number = 1;
+  movies$!: Observable<MovieShort[]>;
+  selectedGenres$!: Observable<Genre[]>;
 
   constructor(type?: MovieListType) {
-    if (type) {
-      this.type = type;
-    }
+    this.type = type as MovieListType;
   }
+
+  ngOnInit(): void {
+    this.selectedGenres$ = this.store.select(selectSelectedGenres);
+    this.init();
+  }
+
+  init() { }
   
   onViewMore() {
     this.router.navigateByUrl(`/movie-list?type=${this.type}`);

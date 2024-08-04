@@ -1,14 +1,19 @@
+/** Core */
 import { Component } from '@angular/core';
-import { Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { AsyncPipe, NgFor, NgIf, NgSwitch, NgSwitchCase } from '@angular/common';
+
+/** Component */
 import { MovieListBase, MovieListType } from '../movie-list-base';
 import { TopRatedMovieComponent } from '../top-rated-movie/top-rated-movie.component';
 import { PopularMovieComponent } from '../popular-movie/popular-movie.component';
 import { UpComingMovieComponent } from '../up-coming-movie/up-coming-movie.component';
-import { MovieShort, PopularActions, selectPopularMovies, selectTopRatedMovies, selectUpComingMovies, TopRatedActions, UpComingActions } from '../../../../core/stores';
 import { MovieCardComponent } from '../../../../shared/components/movie-card/movie-card.component';
 
+/** Ngrx Store */
+import { PopularActions, TopRatedActions, UpComingActions } from '../../../../core/stores';
+
+/** Imports */
 const COMMONS = [NgSwitch, NgSwitchCase, NgIf, NgFor];
 const PIPES = [AsyncPipe];
 const COMPONENTS = [TopRatedMovieComponent, PopularMovieComponent, UpComingMovieComponent, MovieCardComponent];
@@ -21,24 +26,27 @@ const COMPONENTS = [TopRatedMovieComponent, PopularMovieComponent, UpComingMovie
   styleUrls: ['./movie-list.component.scss', '../movie-overall/movie-overall.component.scss']
 })
 export class MovieListComponent extends MovieListBase {
-  movies$!: Observable<MovieShort[]>;
   action!: any;
 
   constructor(private route: ActivatedRoute) {
     super();
     this.type = this.route.snapshot.queryParams?.['type'] ?? MovieListType.TOP_RATED;
+  }
+  
+  override init() {
     this.movies$ = this.getMoviesBasedOnType();
     this.action = this.getAction();
   }
 
   getMoviesBasedOnType() {
+    const homeStoreSelectors = this.homeStore.selectors;
     const movieSelectors = {
-      [MovieListType.TOP_RATED]: selectTopRatedMovies,
-      [MovieListType.POPULAR]: selectPopularMovies,
-      [MovieListType.UP_COMING]: selectUpComingMovies
+      [MovieListType.TOP_RATED]: homeStoreSelectors.topRatedMovies$,
+      [MovieListType.POPULAR]: homeStoreSelectors.popularMovies$,
+      [MovieListType.UP_COMING]: homeStoreSelectors.upComingMovies$
     };
 
-    return this.store.select(movieSelectors[this.type]);
+    return movieSelectors[this.type];
   }
 
   getAction() {

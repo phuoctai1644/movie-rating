@@ -1,7 +1,7 @@
 /** Movie store */
 export interface MovieState {
   genres: Genre[];
-  selectedGenres?: Genre[];
+  selectedGenres: Genre[];
   topRatedMovies: MovieShort[];
   popularMovies: MovieShort[];
   upComingMovies: MovieShort[];
