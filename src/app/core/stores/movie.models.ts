@@ -5,6 +5,7 @@ export interface MovieState {
   topRatedMovies: MovieShort[];
   popularMovies: MovieShort[];
   upComingMovies: MovieShort[];
+  keyword: string;
 }
 
 /** Genre model */

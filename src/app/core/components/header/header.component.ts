@@ -2,10 +2,10 @@ import { AsyncPipe, NgFor, SlicePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Store } from '@ngrx/store';
+import { Router } from '@angular/router';
 import { debounceTime, distinctUntilChanged, Observable } from 'rxjs';
 import { GenreComponent } from '../../../shared/components/genre/genre.component';
-import { allGenre, Genre, GenreActions, MovieState, selectGenres, selectSelectedGenres } from '../../stores';
-import { Router } from '@angular/router';
+import { allGenre, Genre, GenreActions, MovieState, SearchMovieAction, selectGenres, selectSelectedGenres } from '../../stores';
 
 @Component({
   selector: 'app-header',
@@ -46,8 +46,9 @@ export class HeaderComponent implements OnInit {
     
     this.keywordCtrl.valueChanges
       .pipe(debounceTime(500), distinctUntilChanged())
-      .subscribe(value => {
+      .subscribe(keyword => {
         // Dispatch action for searching movie...
+        this.store.dispatch(SearchMovieAction({ keyword }));
       })
   }
 

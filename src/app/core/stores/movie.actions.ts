@@ -1,4 +1,4 @@
-import { createActionGroup, emptyProps, props } from "@ngrx/store";
+import { createAction, createActionGroup, emptyProps, props } from "@ngrx/store";
 import { Genre, MovieShort } from "./movie.models";
 
 export const GenreActions = createActionGroup({
@@ -37,3 +37,5 @@ export const UpComingActions = createActionGroup({
     'getFailed': props<{ error: string }>()
   }
 });
+
+export const SearchMovieAction = createAction('[Movie] Search', props<{ keyword: string }>());
