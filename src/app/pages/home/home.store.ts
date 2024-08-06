@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { tap, withLatestFrom } from 'rxjs/operators';
 import { 
-  Genre, MovieShort, MovieState, selectKeyword, selectPopularMovies, selectSelectedGenres, selectTopRatedMovies,
+  Genre, MovieShort, MovieState, MovieUtils, selectKeyword, selectPopularMovies, selectSelectedGenres, selectTopRatedMovies,
   selectUpComingMovies
 } from '../../core/stores';
 
@@ -12,12 +12,16 @@ interface State {
   topRatedMovies: MovieShort[];
   popularMovies: MovieShort[];
   upComingMovies: MovieShort[];
+  keyword: string;
+  selectedGenres: Genre[];
 }
 
 const initialState: State = {
   topRatedMovies: [],
   popularMovies: [],
   upComingMovies: [],
+  keyword: '',
+  selectedGenres: [],
 }
 
 @Injectable()
@@ -41,7 +45,9 @@ export class HomeStore extends ComponentStore<State> {
   readonly getter = {
     topRatedMovies: () => this.get().topRatedMovies,
     popularMovies: () => this.get().popularMovies,
-    upComingMovies: () => this.get().upComingMovies
+    upComingMovies: () => this.get().upComingMovies,
+    keyword: () => this.get().keyword,
+    selectedGenres: () => this.get().selectedGenres,
   }
 
   readonly selectors = {
@@ -59,16 +65,14 @@ export class HomeStore extends ComponentStore<State> {
     },
     setUpComingMovies: (movies: MovieShort[]) => {
       this.patchState(() => ({ upComingMovies: movies }))
-    }, 
+    },
+    setKeyword: (keyword: string) => {
+      this.patchState(() => ({ keyword }))
+    },
+    setSelectedGenres: (genres: Genre[]) => {
+      this.patchState(() => ({ selectedGenres: genres }))
+    },
   }
-
-  readonly loadPopularMovies = this.effect(() => 
-    this.store.select(selectPopularMovies).pipe(
-      tap((movies: MovieShort[]) => {
-        this.patchState({ popularMovies: movies });
-      })
-    )
-  );
 
   readonly effects = {
     getTopRatedMovies: this.effect((movies$: Observable<MovieShort[]>) => {
@@ -94,34 +98,56 @@ export class HomeStore extends ComponentStore<State> {
           this.selectUpComingMovies$
         ),
         tap(([genres, topRated, popular, upComing]) => {
-          const genreIds = genres.map(genre => genre.id);
-          const updatedMovies = (movies: MovieShort[]) =>
-            movies.filter(movie => movie.genre_ids.some(id => genreIds.includes(id)));
+          const genreIds = genres.map((genre) => genre.id);
+          const currentKeyword = this.getter.keyword();
 
-          if (genreIds.length) {
-            topRated = updatedMovies(topRated);
-            popular = updatedMovies(popular);
-            upComing = updatedMovies(upComing);
-          }
-
-          this.actions.setTopRatedMovies(topRated);
-          this.actions.setPopularMovies(popular);
-          this.actions.setUpComingMovies(upComing);
+          this.updateMovies(topRated, popular, upComing, genreIds, currentKeyword);
+          this.actions.setSelectedGenres(genres);
         })
       )
     }),
     searchMovies: this.effect((keyword$: Observable<string>) => {
-      return keyword$.pipe(tap(keyword => {
-        const filterMovies = (movies: MovieShort[]) => 
-          movies.filter(mv => 
-            mv.title.toLowerCase().includes(keyword) ||
-            mv.original_title.toLowerCase().includes(keyword)
-          );
-        
-        this.actions.setTopRatedMovies(filterMovies(this.getter.topRatedMovies()));
-        this.actions.setPopularMovies(filterMovies(this.getter.popularMovies()));
-        this.actions.setUpComingMovies(filterMovies(this.getter.upComingMovies()));
-      }));
+      return keyword$.pipe(
+        withLatestFrom(
+          this.selectTopRatedMovies$,
+          this.selectPopularMovies$,
+          this.selectUpComingMovies$
+        ),
+        tap(([keyword, topRated, popular, upComing]) => {
+          const selectedGenres  = this.getter.selectedGenres();
+          const genreIds = selectedGenres.map((genre) => genre.id);
+
+          this.updateMovies(topRated, popular, upComing, genreIds, keyword);
+          this.actions.setKeyword(keyword);
+        })
+      )
     })
+  }
+
+  // Utils
+  private updateMovies(
+    topRated: MovieShort[],
+    popular: MovieShort[],
+    upComing: MovieShort[],
+    genreIds: number[],
+    keyword: string
+  ) {
+    if (genreIds.length || keyword) {
+      topRated = this.getter.topRatedMovies();
+      popular = this.getter.popularMovies();
+      upComing = this.getter.upComingMovies();
+    }
+  
+    const filterMovies = (movies: MovieShort[]) => {
+      let filteredMovies = movies;
+      if (genreIds.length) {
+        filteredMovies = MovieUtils.filterByGenreIds(filteredMovies, genreIds);
+      }
+      return MovieUtils.filterByKeyword(filteredMovies, keyword);
+    };
+  
+    this.actions.setTopRatedMovies(filterMovies(topRated));
+    this.actions.setPopularMovies(filterMovies(popular));
+    this.actions.setUpComingMovies(filterMovies(upComing));
   }
 }
